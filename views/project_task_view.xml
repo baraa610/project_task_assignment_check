@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_task_form_inherit_availability" model="ir.ui.view">
+        <field name="name">project.task.form.inherit.availability</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <!-- Add availability status after assignees -->
+            <xpath expr="//field[@name='user_ids']" position="after">
+                <field name="assignee_availability_status" invisible="1"/>
+                <field name="assignee_workload" invisible="1"/>
+                <field name="is_uncovered" invisible="1"/>
+
+                <div class="alert alert-warning" role="alert"
+                     attrs="{'invisible': [('is_uncovered', '=', False)]}">
+                    <strong>⚠️ Uncovered Task Alert!</strong>
+                    <div attrs="{'invisible': [('assignee_availability_status', '!=', 'on_leave')]}">
+                        Assigned user is currently on approved leave.
+                    </div>
+                    <div attrs="{'invisible': [('assignee_availability_status', '!=', 'busy')]}">
+                        Assigned user is already busy with <field name="assignee_workload" class="oe_inline"/> other active tasks.
+                    </div>
+                </div>
+            </xpath>
+
+            <!-- Add status indicator in header -->
+            <xpath expr="//header" position="inside">
+                <button name="action_open_uncovered_alerts"
+                        string="View Uncovered Alerts"
+                        type="object"
+                        class="btn-warning"
+                        attrs="{'invisible': [('is_uncovered', '=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Add filter for uncovered tasks in task list -->
+    <record id="view_task_search_form_inherit_uncovered" model="ir.ui.view">
+        <field name="name">project.task.search.inherit.uncovered</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_search_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='late']" position="after">
+                <separator/>
+                <filter string="Uncovered Tasks" name="uncovered_tasks"
+                        domain="[('is_uncovered', '=', True)]"
+                        help="Tasks assigned to unavailable users"/>
+                <filter string="Assignee On Leave" name="assignee_on_leave"
+                        domain="[('assignee_availability_status', '=', 'on_leave')]"
+                        help="Tasks assigned to users on leave"/>
+                <filter string="Assignee Busy" name="assignee_busy"
+                        domain="[('assignee_availability_status', '=', 'busy')]"
+                        help="Tasks assigned to busy users"/>
+            </xpath>
+            <xpath expr="//group[@name='group_by']" position="inside">
+                <filter string="Availability Status" name="group_availability"
+                        context="{'group_by': 'assignee_availability_status'}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Email template for uncovered task notification -->
+        <record id="email_template_uncovered_task" model="mail.template">
+            <field name="name">Uncovered Task Alert</field>
+            <field name="model_id" ref="project.model_project_task"/>
+            <field name="subject">Alert: Uncovered Task - ${object.name}</field>
+            <field name="email_from">${(object.company_id.email or user.email_formatted)|safe}</field>
+            <field name="email_to">${object.project_id.user_id.email|safe}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        <strong>Uncovered Task Alert</strong>
+                    </p>
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        <br/>
+                        Task: <strong>${object.name}</strong><br/>
+                        Project: ${object.project_id.name}<br/>
+                        Assigned to: ${object.user_ids[0].name if object.user_ids else 'Unassigned'}<br/>
+                        <br/>
+                        % if object.assignee_availability_status == 'on_leave':
+                        <span style="color: red;">⚠️ The assigned user is currently on approved leave.</span>
+                        % endif
+                        % if object.assignee_availability_status == 'busy':
+                        <span style="color: orange;">⚠️ The assigned user is already busy with ${object.assignee_workload} other active tasks.</span>
+                        % endif
+                        <br/><br/>
+                        This task may need to be reassigned to ensure timely completion.
+                        <br/><br/>
+                        <a href="/web#id=${object.id}&amp;model=project.task&amp;view_type=form"
+                           style="background-color: #875A7B; padding: 8px 16px; text-decoration: none; color: #fff; border-radius: 5px;">
+                            View Task
+                        </a>
+                    </p>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>
