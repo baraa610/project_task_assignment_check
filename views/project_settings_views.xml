@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+<odoo>
+    <record id="view_project_task_assignment_config_form" model="ir.ui.view">
+        <field name="name">project.task.assignment.config.form</field>
+        <field name="model">project.task.assignment.config</field>
+        <field name="arch" type="xml">
+            <form string="Task Assignment Settings">
+                <sheet>
+                    <group>
+                        <field name="is_enabled"/>
+                        <field name="behavior"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_project_task_assignment_config" model="ir.actions.act_window">
+        <field name="name">Task Assignment Settings</field>
+        <field name="res_model">project.task.assignment.config</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+    </record>
+
+    <menuitem id="project_task_assignment_config_menu"
+              name="Task Assignment Control"
+              parent="project.menu_project_configuration"
+              action="action_project_task_assignment_config"/>
+</odoo>
+
+    </data>
+</odoo>

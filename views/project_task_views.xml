@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<odoo>
+    <record id="view_task_form_override_reason" model="ir.ui.view">
+        <field name="name">project.task.form.override.reason</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="override_reason" placeholder="Enter reason if overriding assignment"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
+
+    </data>
+</odoo>

@@ -1,0 +1,5 @@
+msgid "User %s is on leave from %s to %s."
+msgstr "User %s is on leave from %s to %s."
+
+msgid "User %s is currently assigned to task %s."
+msgstr "User %s is currently assigned to task %s."

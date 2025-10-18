@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+<odoo>
+    <record id="project_task_assignment_default_config" model="project.task.assignment.config">
+        <field name="is_enabled">True</field>
+        <field name="behavior">warn</field>
+    </record>
+</odoo>
+
+    </data>
+</odoo>
