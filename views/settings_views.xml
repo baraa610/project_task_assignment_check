@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+<odoo>
+    <record id="project_planning_sync_settings" model="ir.ui.view">
+        <field name="name">project.planning.sync.settings</field>
+        <field name="model">res.config.settings</field>
+        <field name="arch" type="xml">
+            <form string="Project Planning Sync Settings">
+                <group string="Project Planning Sync">
+
+                </group>
+            </form>
+        </field>
+    </record>
+</odoo>
+
+
+
+    </data>
+</odoo>
